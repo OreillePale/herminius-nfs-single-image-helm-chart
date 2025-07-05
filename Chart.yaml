@@ -1,0 +1,6 @@
+apiVersion: v2
+name: herminius-single-image
+description: A Helm chart for deploying singe-image apps on my cluster using the NFS storage.
+type: application
+version: 0.1.0
+appVersion: {{ .Values.appVersion }}

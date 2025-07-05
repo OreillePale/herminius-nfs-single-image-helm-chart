@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.Name }}
+  namespace: {{ .Values.Namespace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.Name }}-app
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.Name }}-app
+    spec:
+      securityContext:
+        fsGroup: 1000
+        runAsUser: 0
+      containers:
+        - name: {{ .Values.Name }}-app-container
+          image: {{ .Values.image }}
+          ports:
+            - containerPort: {{ .Values.containerPort }}
+          volumeMounts:
+            - name: {{ .Values.Name }}-volv
+              mountPath: {{ .Values.mountPath }}
+      volumes:
+        - name: {{ .Values.Name }}-volv
+          persistentVolumeClaim:
+            claimName: {{ .Values.Name }}-nfs-claim

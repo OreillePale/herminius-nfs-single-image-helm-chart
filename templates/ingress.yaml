@@ -1,0 +1,26 @@
+{{- if .Values.uri -}}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Values.Name }}-http
+  namespace: {{ .Values.Namespace }}
+  annotations:
+    kubernetes.io/ingress.class: "traefik"
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls.certresolver: default
+spec:
+  rules:
+    - host: {{ .Values.uri }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ .Values.Name }}-service
+                port:
+                  number: {{ .Values.nodePort }}
+  tls:
+    - hosts:
+        - {{ .Values.uri }}
+{{- end -}}

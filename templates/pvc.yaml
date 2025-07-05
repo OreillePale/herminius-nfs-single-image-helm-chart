@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Values.Name }}-nfs-claim
+  namespace: {{ .Values.Namespace }}
+spec:
+  storageClassName: slow
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.storage }}
+  selector:
+    matchLabels:
+      directory: {{ .Values.Name }}

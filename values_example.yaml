@@ -1,0 +1,10 @@
+namespace: grafana
+name: grafana # will be use for deployment, service, etc...
+image: grafana/grafana-oss # the image
+replicas: 1 # replicas
+containerPort: 3000 # app in container
+nodePort: 33000 
+mountPath: /var/lib/grafana
+path: /grafana # the folder in the nfs server
+storage: 1Gi # memory needed for the app
+uri: "grafana.herminius.xyz" # the uri; if this lien does not exist the 
